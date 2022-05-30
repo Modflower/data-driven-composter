@@ -1,0 +1,56 @@
+name: Bug report
+description: Create a bug report to help us improve.
+labels: [ 'bug' ]
+
+body:
+  - type: textarea
+    attributes:
+      label: Environment
+      description: |
+        What platform & version of the mod are you using?
+
+        Example:
+          - **Minecraft**: 1.18.2 Server
+          - **Data Driven Composter**: 0.0.0-beta.5
+          - **Loader**: Quilt
+          - **Java**: Adoptium 17.0.3
+      value: |
+        - **Minecraft**:
+        - **Data Driven Composter**:
+        - **Loader**:
+        - **Java**:
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: To reproduce
+      description: Steps to reproduce the behaviour.
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Expected results
+      description: What behaviour did you expect?
+      placeholder: e.g. To compost goat horns
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Actual results
+      description: What behaviour did you observe instead?
+      placeholder: e.g. It only composts emeralds
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Anything else?
+      description: Crash reports, server logs, screenshots and videos should go here.
+    validations:
+      required: false

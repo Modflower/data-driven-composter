@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "ddc",
+  "version": "${version}",
+  "name": "Data Driven Composter",
+  "description": "An overly configurable composter.",
+  "authors": [
+    "KJP12"
+  ],
+  "icon": "pack.png",
+  "contact": {
+    "sources": "https://github.com/the-glitch-network/data-driven-composter",
+    "discord": "https://discord.gg/EmPS9y9"
+  },
+  "license": [
+    "MPL-2.0"
+  ],
+  "environment": "*",
+  "mixins": [
+    "ddc.mixin.json"
+  ],
+  "depends": {
+    "minecraft": ">=${minecraft_required}"
+  }
+}

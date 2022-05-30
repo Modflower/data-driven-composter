@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "net.kjp12.ddc.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinComposterBlock"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
