@@ -9,18 +9,20 @@ A server-sided composter mod that allows you to customise what you can feed to c
 
 Requirements:
 
-- Minecraft 1.18.2
+- Minecraft 1.18.2+
 - [Data Driven Composter](https://github.com/Modflower/data-driven-composter/releases)
 - One of either mod loader:
     - [Quilt](https://quiltmc.org/install)
     - [Fabric](https://fabricmc.net/use)
 
-Install Minecraft 1.18.2, DDC and your mod loader of choice, then customise the config at `config/ddc.json`. No client
+Install Minecraft 1.18.2 or 1.19, DDC and your mod loader of choice, then customise the config at `config/ddc.json`. No client
 mod is required, but you may install to use it in single player or with LAN.
 
 ## Config - `ddc.json`
 
 *Example configuration*
+
+Note, by default, the entire registry *will* be present.
 
 ```json5
 {
