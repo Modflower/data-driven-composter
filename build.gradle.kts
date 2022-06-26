@@ -10,6 +10,7 @@ plugins {
 
 val minecraftVersion: String by project
 val minecraftRequired: String by project
+val minecraftCompatible: String by project
 val yarnMappings: String by project
 val loaderVersion: String by project
 val fabricApiVersion: String by project
@@ -92,7 +93,7 @@ tasks {
 			else "No changelog is available. Perhaps poke at https://github.com/Modflower/data-driven-composter for a changelog?"
 		)
 		uploadFile.set(remapJar.get())
-		gameVersions.set(listOf(minecraftVersion))
+		gameVersions.set(minecraftCompatible.split(","))
 		loaders.addAll("fabric", "quilt")
 	}
 }
