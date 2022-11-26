@@ -16,6 +16,9 @@
     "MPL-2.0"
   ],
   "environment": "*",
+  "entrypoints": {
+    "main": ["gay.ampflower.ddc.Main::init"]
+  },
   "mixins": [
     "ddc.mixin.json"
   ],
