@@ -16,6 +16,9 @@
     "MPL-2.0"
   ],
   "environment": "*",
+  "entrypoints": {
+    "main": ["net.kjp12.ddc.Main::init"]
+  },
   "mixins": [
     "ddc.mixin.json"
   ],

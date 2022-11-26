@@ -46,6 +46,7 @@ dependencies {
 	minecraft("com.mojang", "minecraft", minecraftVersion)
 	mappings("net.fabricmc", "yarn", yarnMappings, classifier = "v2")
 	modImplementation("net.fabricmc", "fabric-loader", loaderVersion)
+	include(modImplementation(fabricApi.module("fabric-lifecycle-events-v1", fabricApiVersion))!!)
 }
 spotless {
 	java {

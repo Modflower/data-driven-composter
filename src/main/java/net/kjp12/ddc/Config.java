@@ -12,7 +12,6 @@ import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.ComposterBlock;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -44,13 +43,6 @@ public class Config {
 	private static final Gson GSON = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting()
 			.setLenient().registerTypeAdapter(Identifier.class, new IdentifierTypeAdaptor()).create();
 	public static final Config INSTANCE;
-	/**
-	 * Whether initialisation is deferred.
-	 * <p>
-	 * Registries are initialised after this is read, so it is important that any
-	 * registry calls are guarded as Identifier and transferred when ready.
-	 */
-	private transient boolean deferred;
 
 	/**
 	 * Whether the config is being initialised for the first time.
@@ -66,32 +58,36 @@ public class Config {
 	public boolean disableDefaultVanillaRegistry = false;
 
 	/**
+	 * Disables datapack registration of composter entries to allow for fully custom
+	 * entries.
+	 * <p>
+	 * May break any mods that rely on the composter accepting their items.
+	 *
+	 * @since 0.1.0
+	 */
+	public boolean disableDatapackRegistry = false;
+
+	/**
 	 * Logs all calls to
 	 * {@link ComposterBlock#registerCompostableItem(float, net.minecraft.item.ItemConvertible)}
 	 */
 	public boolean logAllDirectRegistration = FabricLoader.getInstance().isDevelopmentEnvironment();
 
 	/**
-	 * Raw version of {@link #compostableItems} to act as a container for GSON.
-	 */
-	@SerializedName("compostableItems")
-	private Map<Identifier, Float> compostableItemsRaw;
-
-	/**
 	 * Items that can be composted by a composter, giving a chance of it to
 	 * increment the level.
 	 *
-	 * @implNote This is <em>not ready</em> unless {@link #isReady()} is called and
-	 *           returns {@code true}.
+	 * @implNote This is intended to be read on server start and datapack reload.
+	 * @since 0.1.0
 	 */
-	public transient Object2FloatMap<ItemConvertible> compostableItems;
+	@SerializedName("compostableItems")
+	public Map<Identifier, Float> compostableItems;
 
 	static {
 		Config instance = null;
 		if (Files.exists(config)) {
 			try (var reader = Files.newBufferedReader(config)) {
 				instance = GSON.fromJson(reader, Config.class);
-				instance.deferred = true;
 			} catch (IOException ioe) {
 				Main.logger.warn("Unable to read config, regenerating...", ioe);
 			}
@@ -111,16 +107,7 @@ public class Config {
 	 * Initialises the config if applicable once it's loaded.
 	 */
 	public boolean isReady() {
-		if (generating) {
-			return false;
-		}
-		if (deferred) {
-			deferred = false;
-			compostableItems = new Object2FloatOpenHashMap<>();
-			compostableItemsRaw.forEach((k, v) -> compostableItems.put(Registry.ITEM.get(k), (float) v));
-			compostableItemsRaw = null;
-		}
-		return true;
+		return !generating;
 	}
 
 	/**
@@ -128,9 +115,9 @@ public class Config {
 	 */
 	public void generateSettings() {
 		if (generating) {
-			compostableItemsRaw = new Object2FloatOpenHashMap<>();
+			compostableItems = new Object2FloatOpenHashMap<>();
 			ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE
-					.forEach((item, value) -> compostableItemsRaw.put(Registry.ITEM.getId(item.asItem()), value));
+					.forEach((item, value) -> compostableItems.put(Registry.ITEM.getId(item.asItem()), value));
 
 			try (var writer = Files.newBufferedWriter(config)) {
 				GSON.toJson(this, writer);
