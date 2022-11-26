@@ -2,13 +2,11 @@ rootProject.name = "data-driven-composter"
 
 pluginManagement {
     repositories {
-        maven {
+        maven("https://maven.fabricmc.net/") {
             name = "Fabric"
-            url = uri("https://maven.fabricmc.net/")
         }
-        maven {
+        maven("https://maven.quiltmc.org/repository/release/") {
             name = "Quilt"
-            url = uri("https://maven.quiltmc.org/repository/release/")
             content {
                 includeGroup("org.quiltmc")
             }
