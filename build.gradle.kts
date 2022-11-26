@@ -36,10 +36,6 @@ java {
 
 repositories {
 	mavenCentral()
-	maven {
-		name = "NucleoidMC"
-		url = uri("https://maven.nucleoid.xyz")
-	}
 }
 
 dependencies {
