@@ -41,8 +41,8 @@ public class Main {
 			vanillaCompostableItems = new Object2FloatArrayMap<>(ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE);
 
 			// Generate settings if they aren't already present.
-			if (!Config.INSTANCE.isReady()) {
-				Config.INSTANCE.generateSettings();
+			if (!Config.instance.isReady()) {
+				Config.instance.generateSettings();
 			}
 
 			ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.clear();
@@ -55,8 +55,10 @@ public class Main {
 		// This is somewhat hacky, but intends to make sure that other implementations
 		// such as QSL has the ability to register its own additions via its internal
 		// registries.
-		ServerLifecycleEvents.START_DATA_PACK_RELOAD
-				.register((server, resourceManager) -> ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.clear());
+		ServerLifecycleEvents.START_DATA_PACK_RELOAD.register((server, resourceManager) -> {
+			ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.clear();
+			Config.reload();
+		});
 
 		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, resourceManager, success) -> hotLoad());
 
@@ -67,7 +69,7 @@ public class Main {
 				ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.putAll(vanillaCompostableItems);
 
 				vanillaCompostableItems = null;
-			} else if (Config.INSTANCE.disableDefaultVanillaRegistry) {
+			} else if (Config.instance.disableDefaultVanillaRegistry) {
 				logger.warn("The vanillaCompostableItems map is missing. This shouldn't happen!");
 			}
 		});
@@ -84,10 +86,10 @@ public class Main {
 		// cleared.
 		// This intends to clear any interference that may otherwise be caused by
 		// hot reloading.
-		if (Config.INSTANCE.disableDefaultVanillaRegistry) {
+		if (Config.instance.disableDefaultVanillaRegistry) {
 			// The registry is already cleared by the outer method prior to reloading.
 			// This only clears if datapack clearing is also enabled.
-			if (Config.INSTANCE.disableDatapackRegistry) {
+			if (Config.instance.disableDatapackRegistry) {
 				logger.info("[DDC] Evoking {} as `disableDatapackRegistry` for the composter is enabled.",
 						ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE);
 				ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.clear();
@@ -95,7 +97,7 @@ public class Main {
 		} else {
 			// Same as above, but redeploys the vanilla registry.
 			// Not sure why you want this, but here you go.
-			if (Config.INSTANCE.disableDatapackRegistry) {
+			if (Config.instance.disableDatapackRegistry) {
 				logger.info(
 						"[DDC] Evoking {} in favour of vanilla registry base as `disableDatapackRegistry` for the composter is enabled.",
 						ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE);
@@ -128,7 +130,7 @@ public class Main {
 	public static void register() {
 		var compostableItems = new Object2FloatOpenHashMap<ItemConvertible>();
 
-		Config.INSTANCE.compostableItems.forEach((k, v) -> {
+		Config.instance.compostableItems.forEach((k, v) -> {
 			var item = Registry.ITEM.getOrEmpty(k);
 			if (item.isEmpty()) {
 				logger.warn("{} -> {} not preset at current time.", k, v);
