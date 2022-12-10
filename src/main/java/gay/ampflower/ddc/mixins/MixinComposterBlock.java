@@ -34,7 +34,7 @@ public class MixinComposterBlock {
 
 	@Redirect(method = "<clinit>", at = @At(value = "FIELD", opcode = Opcodes.PUTSTATIC, target = "Lnet/minecraft/block/ComposterBlock;ITEM_TO_LEVEL_INCREASE_CHANCE:Lit/unimi/dsi/fastutil/objects/Object2FloatMap;"))
 	private static void ddc$redirectToLoggingMap(Object2FloatMap<ItemConvertible> value) {
-		ITEM_TO_LEVEL_INCREASE_CHANCE = Config.INSTANCE.logAllDirectRegistration ? new LoggingObject2FloatMap<>(value)
+		ITEM_TO_LEVEL_INCREASE_CHANCE = Config.instance.logAllDirectRegistration ? new LoggingObject2FloatMap<>(value)
 				: value;
 	}
 }

@@ -42,7 +42,7 @@ public class Config {
 	 */
 	private static final Gson GSON = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting()
 			.setLenient().registerTypeAdapter(Identifier.class, new IdentifierTypeAdaptor()).create();
-	public static final Config INSTANCE;
+	public static Config instance;
 
 	/**
 	 * Whether the config is being initialised for the first time.
@@ -84,6 +84,10 @@ public class Config {
 	public Map<Identifier, Float> compostableItems;
 
 	static {
+		reload();
+	}
+
+	public static void reload() {
 		Config instance = null;
 		if (Files.exists(config)) {
 			try (var reader = Files.newBufferedReader(config)) {
@@ -92,11 +96,19 @@ public class Config {
 				Main.logger.warn("Unable to read config, regenerating...", ioe);
 			}
 		}
+
 		if (instance == null) {
-			instance = new Config();
-			instance.generating = true;
+			if (Config.instance == null) {
+				instance = new Config();
+				instance.generating = true;
+			} else {
+				Main.logger.warn("Configuration already in memory, writing back to disc...");
+				Config.instance.write();
+				return;
+			}
 		}
-		INSTANCE = instance;
+
+		Config.instance = instance;
 	}
 
 	/* Private as you shouldn't be directly initialising this. */
@@ -119,11 +131,15 @@ public class Config {
 			ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE
 					.forEach((item, value) -> compostableItems.put(Registry.ITEM.getId(item.asItem()), value));
 
-			try (var writer = Files.newBufferedWriter(config)) {
-				GSON.toJson(this, writer);
-			} catch (IOException ioe) {
-				Main.logger.warn("Unable to write config?", ioe);
-			}
+			write();
+		}
+	}
+
+	private void write() {
+		try (var writer = Files.newBufferedWriter(config)) {
+			GSON.toJson(this, writer);
+		} catch (IOException ioe) {
+			Main.logger.warn("Unable to write config?", ioe);
 		}
 	}
 
