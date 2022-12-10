@@ -22,13 +22,22 @@ mod is required, but you may install to use it in single player or with LAN.
 
 *Example configuration*
 
-Note, by default, the entire registry *will* be present.
+Note: By default, the entire registry *will* be present.
+
+Tip: If you would like to hot reload the configuration without restarting the server, use the default `/reload` command
+built into the game.
+DDC will automatically load in your changes live without any other intervention, including restoring the vanilla
+registry if you want.
 
 ```json5
 {
    // Whether to disable vanilla registration. Set this to true if
    // you'd like to define your own values for vanilla's stuff.
    "disableDefaultVanillaRegistry": false,
+   // Whether to disable the datapack registry. Set this to true if
+   // you'd like to define your own values for vanilla's stuff, or
+   // disable modded entries on Quilt.
+   "disableDatapackRegistry": false,
    // Whether registration should be logged or not.
    // Disabled by default due to it spamming stack traces for each call.
    "logAllDirectRegistration": false,
@@ -48,6 +57,9 @@ Note, by default, the entire registry *will* be present.
 - `disableDefaultVanillaRegistry`
     - `true`: Disables Vanilla registration.
     - `false`: Keep Vanilla registration.
+- `disableDatapackRegistry`
+  - `true`: Disables datapack registration.
+  - `false`: Keep datapack registration.
 - `logAllDirectRegistration`: Debugging option.
     - `true`: Logs all registrations to the composter block.
     - `false`: Does not log any registration to the composter block.
