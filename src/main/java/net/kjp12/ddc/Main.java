@@ -8,6 +8,7 @@ package net.kjp12.ddc;// Created 2022-28-05T14:33:10
 
 import it.unimi.dsi.fastutil.objects.Object2FloatArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2FloatMap;
+import it.unimi.dsi.fastutil.objects.Object2FloatMaps;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.block.ComposterBlock;
@@ -93,6 +94,18 @@ public class Main {
 				logger.info("[DDC] Evoking {} as `disableDatapackRegistry` for the composter is enabled.",
 						ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE);
 				ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.clear();
+			} else {
+				logger.info("[DDC] Evoking vanilla registry entries manually to account for other mods.");
+				// Capture a working map to avoid spamming the logs when our logger is enabled.
+				var intermediary = new Object2FloatOpenHashMap<>(ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE);
+				ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.clear();
+
+				// Manually clear out all *exact* entries from the intermediate step.
+				Object2FloatMaps.fastForEach(vanillaCompostableItems,
+						e -> intermediary.remove(e.getKey(), e.getFloatValue()));
+
+				// Set the intermediate step back into working.
+				ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.putAll(intermediary);
 			}
 		} else {
 			// Same as above, but redeploys the vanilla registry.
