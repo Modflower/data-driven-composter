@@ -21,7 +21,7 @@ import it.unimi.dsi.fastutil.objects.*;
 import it.unimi.dsi.fastutil.shorts.Short2FloatFunction;
 import it.unimi.dsi.fastutil.shorts.Short2ObjectFunction;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -63,7 +63,7 @@ public class LoggingObject2FloatMap<K> implements Object2FloatMap<K> {
 	@Override
 	public float put(K key, float value) {
 		if (key instanceof ItemConvertible ic) {
-			Main.logger.info("Put detected for {}: {} -> {}", ic, Registry.ITEM.getId(ic.asItem()), value,
+			Main.logger.info("Put detected for {}: {} -> {}", ic, Registries.ITEM.getId(ic.asItem()), value,
 					new Throwable());
 		} else {
 			Main.logger.info("Put detected for {} -> {}", key, value, new Throwable());
@@ -232,7 +232,7 @@ public class LoggingObject2FloatMap<K> implements Object2FloatMap<K> {
 	public Float computeIfAbsent(K key, @NotNull Function<? super K, ? extends Float> mappingFunction) {
 		if (key instanceof ItemConvertible ic) {
 			Main.logger.info("Potential put detected for {}: {} with given function {}", ic,
-					Registry.ITEM.getId(ic.asItem()), mappingFunction, new Throwable());
+					Registries.ITEM.getId(ic.asItem()), mappingFunction, new Throwable());
 		} else {
 			Main.logger.info("Potential put detected for {} with given function {}", key, mappingFunction,
 					new Throwable());
@@ -245,7 +245,7 @@ public class LoggingObject2FloatMap<K> implements Object2FloatMap<K> {
 			@NotNull BiFunction<? super K, ? super Float, ? extends Float> remappingFunction) {
 		if (key instanceof ItemConvertible ic) {
 			Main.logger.info("Potential put detected for {}: {} with given function {}", ic,
-					Registry.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
+					Registries.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
 		} else {
 			Main.logger.info("Potential put detected for {} with given function {}", key, remappingFunction,
 					new Throwable());
@@ -257,7 +257,7 @@ public class LoggingObject2FloatMap<K> implements Object2FloatMap<K> {
 	public Float compute(K key, @NotNull BiFunction<? super K, ? super Float, ? extends Float> remappingFunction) {
 		if (key instanceof ItemConvertible ic) {
 			Main.logger.info("Potential put detected for {}: {} with given function {}", ic,
-					Registry.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
+					Registries.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
 		} else {
 			Main.logger.info("Potential put detected for {} with given function {}", key, remappingFunction,
 					new Throwable());
@@ -278,7 +278,7 @@ public class LoggingObject2FloatMap<K> implements Object2FloatMap<K> {
 	@Override
 	public float putIfAbsent(K key, float value) {
 		if (key instanceof ItemConvertible ic) {
-			Main.logger.info("Potential put detected for {}: {} -> {}", ic, Registry.ITEM.getId(ic.asItem()), value,
+			Main.logger.info("Potential put detected for {}: {} -> {}", ic, Registries.ITEM.getId(ic.asItem()), value,
 					new Throwable());
 		} else {
 			Main.logger.info("Potential put detected for {} -> {}", key, value, new Throwable());
@@ -305,7 +305,7 @@ public class LoggingObject2FloatMap<K> implements Object2FloatMap<K> {
 	public float computeIfAbsent(K key, ToDoubleFunction<? super K> mappingFunction) {
 		if (key instanceof ItemConvertible ic) {
 			Main.logger.info("Potential put detected for {}: {} with given function {}", ic,
-					Registry.ITEM.getId(ic.asItem()), mappingFunction, new Throwable());
+					Registries.ITEM.getId(ic.asItem()), mappingFunction, new Throwable());
 		} else {
 			Main.logger.info("Potential put detected for {} with given function {}", key, mappingFunction,
 					new Throwable());
@@ -317,7 +317,7 @@ public class LoggingObject2FloatMap<K> implements Object2FloatMap<K> {
 	public float computeIfAbsent(K key, Object2FloatFunction<? super K> mappingFunction) {
 		if (key instanceof ItemConvertible ic) {
 			Main.logger.info("Potential put detected for {}: {} with given function {}", ic,
-					Registry.ITEM.getId(ic.asItem()), mappingFunction, new Throwable());
+					Registries.ITEM.getId(ic.asItem()), mappingFunction, new Throwable());
 		} else {
 			Main.logger.info("Potential put detected for {} with given function {}", key, mappingFunction,
 					new Throwable());
@@ -329,7 +329,7 @@ public class LoggingObject2FloatMap<K> implements Object2FloatMap<K> {
 	public float computeFloatIfPresent(K key, BiFunction<? super K, ? super Float, ? extends Float> remappingFunction) {
 		if (key instanceof ItemConvertible ic) {
 			Main.logger.info("Potential put detected for {}: {} with given function {}", ic,
-					Registry.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
+					Registries.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
 		} else {
 			Main.logger.info("Potential put detected for {} with given function {}", key, remappingFunction,
 					new Throwable());
@@ -341,7 +341,7 @@ public class LoggingObject2FloatMap<K> implements Object2FloatMap<K> {
 	public float computeFloat(K key, BiFunction<? super K, ? super Float, ? extends Float> remappingFunction) {
 		if (key instanceof ItemConvertible ic) {
 			Main.logger.info("Potential put detected for {}: {} with given function {}", ic,
-					Registry.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
+					Registries.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
 		} else {
 			Main.logger.info("Potential put detected for {} with given function {}", key, remappingFunction,
 					new Throwable());
@@ -354,7 +354,7 @@ public class LoggingObject2FloatMap<K> implements Object2FloatMap<K> {
 			BiFunction<? super Float, ? super Float, ? extends Float> remappingFunction) {
 		if (key instanceof ItemConvertible ic) {
 			Main.logger.info("Put detected for {}: {} -> {} with given function {}", ic, value,
-					Registry.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
+					Registries.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
 		} else {
 			Main.logger.info("Put detected for {} -> {} with given function {}", key, value, remappingFunction,
 					new Throwable());
@@ -366,7 +366,7 @@ public class LoggingObject2FloatMap<K> implements Object2FloatMap<K> {
 	public float mergeFloat(K key, float value, FloatBinaryOperator remappingFunction) {
 		if (key instanceof ItemConvertible ic) {
 			Main.logger.info("Put detected for {}: {} -> {} with given function {}", ic, value,
-					Registry.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
+					Registries.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
 		} else {
 			Main.logger.info("Put detected for {} -> {} with given function {}", key, value, remappingFunction,
 					new Throwable());
@@ -378,7 +378,7 @@ public class LoggingObject2FloatMap<K> implements Object2FloatMap<K> {
 	public float mergeFloat(K key, float value, DoubleBinaryOperator remappingFunction) {
 		if (key instanceof ItemConvertible ic) {
 			Main.logger.info("Put detected for {}: {} -> {} with given function {}", ic, value,
-					Registry.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
+					Registries.ITEM.getId(ic.asItem()), remappingFunction, new Throwable());
 		} else {
 			Main.logger.info("Put detected for {} -> {} with given function {}", key, value, remappingFunction,
 					new Throwable());

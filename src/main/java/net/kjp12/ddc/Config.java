@@ -12,8 +12,8 @@ import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.ComposterBlock;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -129,7 +129,7 @@ public class Config {
 		if (generating) {
 			compostableItems = new Object2FloatOpenHashMap<>();
 			ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE
-					.forEach((item, value) -> compostableItems.put(Registry.ITEM.getId(item.asItem()), value));
+					.forEach((item, value) -> compostableItems.put(Registries.ITEM.getId(item.asItem()), value));
 
 			write();
 		}
