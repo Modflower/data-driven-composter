@@ -12,7 +12,7 @@ import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -131,7 +131,7 @@ public class Main {
 		var compostableItems = new Object2FloatOpenHashMap<ItemConvertible>();
 
 		Config.instance.compostableItems.forEach((k, v) -> {
-			var item = Registry.ITEM.getOrEmpty(k);
+			var item = Registries.ITEM.getOrEmpty(k);
 			if (item.isEmpty()) {
 				logger.warn("{} -> {} not preset at current time.", k, v);
 			} else {
