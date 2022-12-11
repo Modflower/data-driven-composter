@@ -23,6 +23,7 @@
     "ddc.mixin.json"
   ],
   "depends": {
-    "minecraft": ">=${minecraft_required}"
+    "minecraft": ">=${minecraft_required}",
+    "fabric-lifecycle-events-v1": "*"
   }
 }
