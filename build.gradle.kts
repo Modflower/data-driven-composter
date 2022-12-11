@@ -43,6 +43,7 @@ dependencies {
 	mappings("net.fabricmc", "yarn", yarnMappings, classifier = "v2")
 	modImplementation("net.fabricmc", "fabric-loader", loaderVersion)
 	include(modImplementation(fabricApi.module("fabric-lifecycle-events-v1", fabricApiVersion))!!)
+	include(modImplementation(fabricApi.module("fabric-api-base", fabricApiVersion))!!)
 }
 spotless {
 	java {
