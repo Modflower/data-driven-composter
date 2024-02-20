@@ -4,18 +4,15 @@ import java.nio.charset.StandardCharsets
 plugins {
 	java
 	`java-library`
-	id("fabric-loom")
-	id("com.diffplug.spotless")
-	id("com.modrinth.minotaur")
+	alias(libs.plugins.loom)
+	alias(libs.plugins.spotless)
+	alias(libs.plugins.minotaur)
 	`maven-publish`
 }
 
-val minecraftVersion: String by project
-val minecraftRequired: String by project
-val minecraftCompatible: String by project
-val yarnMappings: String by project
-val loaderVersion: String by project
-val fabricApiVersion: String by project
+val minecraftVersion = libs.versions.minecraft.version.get()
+val minecraftCompatible = libs.versions.minecraft.compatible.get()
+val fabricApiVersion = libs.versions.fabric.api.get()
 val projectVersion: String by project
 val modrinthId: String by project
 
@@ -24,7 +21,6 @@ val isRelease = System.getenv("BUILD_RELEASE").toBoolean()
 val isActions = System.getenv("GITHUB_ACTIONS").toBoolean()
 val baseVersion = "$projectVersion+mc.$minecraftVersion"
 
-group = "gay.ampflower"
 version = when {
 	isRelease -> baseVersion
 	isActions -> "$baseVersion-build.${System.getenv("GITHUB_RUN_NUMBER")}-commit.${System.getenv("GITHUB_SHA").substring(0, 7)}-branch.${System.getenv("GITHUB_REF")?.substring(11)?.replace('/', '.') ?: "unknown"}"
@@ -41,11 +37,12 @@ repositories {
 }
 
 dependencies {
-	minecraft("com.mojang", "minecraft", minecraftVersion)
-	mappings("net.fabricmc", "yarn", yarnMappings, classifier = "v2")
-	modImplementation("net.fabricmc", "fabric-loader", loaderVersion)
+	minecraft(libs.minecraft)
+	mappings(variantOf(libs.yarn) { classifier("v2") })
+	modImplementation(libs.bundles.fabric)
 	include(modImplementation(fabricApi.module("fabric-lifecycle-events-v1", fabricApiVersion))!!)
 	include(modImplementation(fabricApi.module("fabric-api-base", fabricApiVersion))!!)
+	compileOnly(libs.bundles.compile)
 }
 spotless {
 	java {
@@ -65,8 +62,7 @@ tasks {
 		val map = mapOf(
 			"version" to project.version,
 			"project_version" to projectVersion,
-			"loader_version" to loaderVersion,
-			"minecraft_required" to minecraftRequired
+			"minecraft_required" to libs.versions.minecraft.required.get()
 		)
 		inputs.properties(map)
 

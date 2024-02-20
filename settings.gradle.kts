@@ -13,10 +13,12 @@ pluginManagement {
         }
         gradlePluginPortal()
     }
-    plugins {
-        id("fabric-loom") version System.getProperty("loomVersion")!!
-        id("com.diffplug.spotless") version System.getProperty("spotlessVersion")!!
-        id("com.modrinth.minotaur") version System.getProperty("minotaurVersion")!!
-    }
 }
 
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs") {
+            from(files("libs.versions.toml"))
+        }
+    }
+}
