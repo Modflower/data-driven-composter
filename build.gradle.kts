@@ -1,10 +1,12 @@
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
+
 plugins {
 	java
 	`java-library`
 	id("fabric-loom")
 	id("com.diffplug.spotless")
 	id("com.modrinth.minotaur")
-	id("io.github.juuxel.loom-quiltflower")
 	`maven-publish`
 }
 
@@ -87,7 +89,7 @@ tasks {
 		)
 		val ref = System.getenv("GITHUB_REF")
 		changelog.set(
-			System.getenv("CHANGELOG") ?: if (ref != null && ref.startsWith("refs/tags/")) "You may view the changelog at https://github.com/Modflower/data-driven-composter/releases/tag/${com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(ref.substring(10))}"
+			System.getenv("CHANGELOG") ?: if (ref != null && ref.startsWith("refs/tags/")) "You may view the changelog at https://github.com/Modflower/data-driven-composter/releases/tag/${URLEncoder.encode(ref.substring(10), StandardCharsets.UTF_8)}"
 			else "No changelog is available. Perhaps poke at https://github.com/Modflower/data-driven-composter for a changelog?"
 		)
 		uploadFile.set(remapJar.get())

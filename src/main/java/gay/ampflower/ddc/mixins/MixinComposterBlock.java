@@ -6,9 +6,9 @@
 
 package gay.ampflower.ddc.mixins;
 
-import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import gay.ampflower.ddc.Config;
 import gay.ampflower.ddc.LoggingObject2FloatMap;
+import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.ItemConvertible;
 import org.objectweb.asm.Opcodes;
