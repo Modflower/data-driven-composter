@@ -1,0 +1,38 @@
+[versions]
+# Minecraft
+minecraft-version = "1.19.3"
+minecraft-required = ">=1.19.3"
+minecraft-compatible = "1.19.3,1.19.4,1.20,1.20.1,1.20.2"
+
+yarn = "1.19.3+build.2"
+
+# Fabric
+fabric-loader = "0.15.+"
+fabric-api = "0.68.1+1.19.3"
+
+# Libraries
+annotations = "23.+"
+
+# Plugins
+loom = "1.5.+"
+spotless = "6.25.+"
+minotaur = "2.+"
+
+[libraries]
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft-version" }
+yarn = { module = "net.fabricmc:yarn", version.ref = "yarn" }
+
+fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
+fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
+
+annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
+
+[bundles]
+fabric = ["fabric-loader"]
+
+compile = ["annotations"]
+
+[plugins]
+loom = { id = "fabric-loom", version.ref = "loom" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+minotaur = { id = "com.modrinth.minotaur", version.ref = "minotaur" }
